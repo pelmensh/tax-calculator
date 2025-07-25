@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Калькулятор налогов</title>
+  <title>Калькулятор налогов "Пельмень"</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     body {
-      background-color: #121212;
-      color: #ffffff;
+      background-color: #6D7A94;
+      color: #B3E7FF;
       font-family: 'Montserrat', sans-serif;
       padding: 20px;
       max-width: 400px;
@@ -87,23 +87,26 @@
     }
 
     function calculate() {
-      const status = document.getElementById('status').value;
-      const income = parseFloat(document.getElementById('income').value) || 0;
-      const expense = parseFloat(document.getElementById('expense').value) || 0;
-      let tax = 0;
+  const status = document.getElementById('status').value;
+  const income = parseFloat(document.getElementById('income').value) || 0;
+  const expense = parseFloat(document.getElementById('expense').value) || 0;
+  let tax = 0;
+  let message = '';
 
-      if (status === 'self') {
-        tax = income * 0.06;
-      } else {
-        const type = document.getElementById('taxType').value;
-        if (type === 'usn6') {
-          tax = income * 0.06;
-        } else if (type === 'usn15') {
-          tax = Math.max(0, (income - expense) * 0.15);
-        }
-      }
+  if (status === 'self') {
+    tax = income * 0.06;
+    message = 'А не проще по номеру телефона деньги переводить?';
+  } else {
+    const type = document.getElementById('taxType').value;
+    if (type === 'usn6') {
+      tax = income * 0.06;
+    } else if (type === 'usn15') {
+      tax = Math.max(0, (income - expense) * 0.15);
+    }
+    message = 'Зачем тебе это надо?';
+  }
 
-      document.getElementById('result').innerText = `Налог к уплате: ${Math.round(tax)} ₽`;
+  document.getElementById('result').innerText = `${message}\nНалог к уплате: ${Math.round(tax)} ₽`;
     }
 
     Telegram.WebApp.ready();
